@@ -10,7 +10,7 @@
               (:remote-addr request-map)
               "</body></html>")})
 
-(defn wrap-nocache []
+(defn wrap-nocache [request]
   (fn [request]
     (-> request
         handler
@@ -18,6 +18,6 @@
 
 (defn -main []
   (jetty/run-jetty
-   (-> handler var wrap-nocache wrap-reloady)
+   (-> handler var wrap-nocache wrap-reload)
    {:port 3000
     :join? false})) ;; join sets server blocking. False is required for REPL
