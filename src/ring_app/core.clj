@@ -18,11 +18,10 @@
   (response/ok
    {:result (-> request :params :id)}))
 
-(defn handler
-  (compojure/routes
-   (compojure/GET "/" request response-handler)
-   (compojure/GET "/:id" [id] (str "<p>the id is: " id "</p>"))
-   (compojure/POST "/json" [id] (response/ok {:result id}))))    ;; id is expected to be a json encoded param at the root of the json e.g. {"id" :1} etc.
+(compojure/defroutes handler
+  (compojure/GET "/" request response-handler)
+  (compojure/GET "/:id" [id] (str "<p>the id is: " id "</p>"))
+  (compojure/POST "/json" [id] (response/ok {:result id})))    ;; id is expected to be a json encoded param at the root of the json e.g. {"id" :1} etc.
 
 (defn wrap-formats [handler]
   (wrap-restful-format
